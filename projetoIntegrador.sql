@@ -129,3 +129,18 @@ INSERT INTO evento (tipo, primeiro_contato, data_interesse, horario_interesse, q
 -- Exemplo de quando está em negociação
 INSERT INTO evento (tipo, primeiro_contato, data_interesse, horario_interesse, qtd_adultos, qtd_criancas, duracao, status, valor, pagamento, custo_evento, fk_prospect, fk_vendedor, fk_cardapio) VALUES
 ('Aniversário de 15 anos', '2025-07-18', '2025-12-19', '18:00', 49, 45, '05:00', 'Em negociação', 425.00, NULL, 300.00, 8, 7, 1);
+
+
+CREATE OR REPLACE FUNCTION resposta_insert() RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE 'Evento cadastrado com sucesso';
+	RETURN NULL;
+END;
+$$
+
+CREATE OR REPLACE TRIGGER depois_do_cadastro
+AFTER INSERT ON evento
+FOR EACH ROW
+	EXECUTE FUNCTION resposta_insert();
