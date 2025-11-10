@@ -24,3 +24,18 @@ e organizar as informações comerciais desde o primeiro contato com o cliente a
 e o pós-venda. Com isso, busca-se não apenas aumentar a produtividade e a eficiência dos processos
 internos, mas também proporcionar maior qualidade no atendimento e previsibilidade para a gestão
 organizacional. 
+
+<br>
+
+# Entrega de Programação em Banco de Dados I
+
+
+1. Stored Procedure
+- Foi calculada a soma total dos lucros dos eventos realizados.
+- Esta informação é de grânde relevância pois é essencial para tomada de decisões saber quanto dinheiro a empresa está ganhando e saber se seu capital está crescendo.
+- Foi utilizada a tabela 'evento' e as colunas: valor e custo_evento.
+
+2. Trigger
+- O trigger é disparado após a inserção de um dado na tabela 'evento'.
+- É disparada a seguinte mensagem: 'Evento cadastrado com sucesso'.
+- Como benefício temos mais uma confirmação de que um registro foi salvo na tabela, uma boa prática no processo de tratar erros.
