@@ -144,3 +144,42 @@ CREATE OR REPLACE TRIGGER depois_do_cadastro
 AFTER INSERT ON evento
 FOR EACH ROW
 	EXECUTE FUNCTION resposta_insert();
+
+
+CREATE OR REPLACE PROCEDURE sp_calcula_lucro_total()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    cur_eventos REFCURSOR;
+    v_valor NUMERIC(10,2);
+    v_custo NUMERIC(10,2);
+    v_lucro NUMERIC(10,2);
+    v_total_lucro NUMERIC(10,2) := 0;
+    v_nome_tabela VARCHAR(100) := 'evento';
+BEGIN
+    -- Abre o cursor
+    OPEN cur_eventos FOR EXECUTE
+        format(
+            'SELECT valor, custo_evento FROM %I WHERE status = %L',
+            v_nome_tabela,
+            'Tornou-se cliente'
+        );
+
+    -- Percorre os registros e soma os lucros
+    LOOP
+        FETCH cur_eventos INTO v_valor, v_custo;
+        EXIT WHEN NOT FOUND;
+
+        v_lucro := v_valor - v_custo;
+        v_total_lucro := v_total_lucro + v_lucro;
+    END LOOP;
+
+    -- Fecha o cursor
+    CLOSE cur_eventos;
+
+    -- Exibe o lucro total
+    RAISE NOTICE 'Lucro total: %', v_total_lucro;
+END;
+$$;
+
+CALL sp_calcula_lucro_total();
